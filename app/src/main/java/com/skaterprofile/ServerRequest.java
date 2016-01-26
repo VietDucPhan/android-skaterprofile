@@ -20,7 +20,7 @@ import java.nio.charset.MalformedInputException;
  * Created by Carl on 1/20/2016.
  */
 
-class ServerRequest {
+public class ServerRequest {
   private static final String BASE_URL = "https://skaterprofile.herokuapp.com/api/";
 
   private static AsyncHttpClient client = new AsyncHttpClient();

@@ -28,6 +28,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.model.Posts;
+import com.parsers.PostsJsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,12 +44,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.MalformedInputException;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
-
-  MainActivity THIS = this;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
     protected JSONArray doInBackground(JSONObject... response) {
       try {
         JSONArray respnoseArray = response[0].getJSONArray("response");
+        List<Posts> postList = PostsJsonParser.parseFeed(respnoseArray);
+        
         return  respnoseArray;
       } catch (JSONException e ){
         e.printStackTrace();
@@ -99,33 +102,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostExecute(JSONArray respnoseArray) {
       super.onPostExecute(respnoseArray);
-      try {
 
-        for (int i = 0; i < respnoseArray.length(); i++){
-          String urlStr = null;
-          JSONObject contentObj = respnoseArray.getJSONObject(i);
-          LinearLayout ll = (LinearLayout) findViewById(R.id.viewScrollContent);
-          urlStr = contentObj.get("source").toString();
-          InputStream is = (InputStream) new URL(urlStr).openConnection().getInputStream();
-          Bitmap bit = BitmapFactory.decodeStream(is);
-          ImageView iv = new ImageView(THIS);
-          iv.setImageBitmap(bit);
-
-          TextView tv = new TextView(THIS);
-          tv.setText(urlStr);
-          ll.addView(tv);
-          ll.addView(iv);
-
-
-          Log.i("source", urlStr);
-        }
-      } catch(JSONException e){
-        e.printStackTrace();
-      } catch (MalformedURLException e){
-        e.printStackTrace();
-      } catch (IOException e){
-        e.printStackTrace();
-      }
     }
   }
 

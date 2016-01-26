@@ -12,17 +12,10 @@
     tools:context="com.skaterprofile.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewscroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewScrollContent"
-            android:orientation="horizontal">
 
-        </LinearLayout>
-
-    </ScrollView>
+    </ListView>
 </RelativeLayout>
