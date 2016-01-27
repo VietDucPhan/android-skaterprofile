@@ -23,7 +23,10 @@ public class PostsJsonParser {
         JSONObject obj = content.getJSONObject(i);
         Posts post = new Posts();
 
-        post.setDescription(obj.getString("source").toString());
+        post.setDesc(obj.getString("desc").toString());
+        post.setName(obj.getString("name").toString());
+        post.setImage(obj.getString("source").toString());
+
 
         postList.add(post);
       }

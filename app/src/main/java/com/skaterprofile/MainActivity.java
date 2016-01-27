@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         // If the response is JSONObject instead of expected JSONArray
+        Log.d("Json", response.toString());
         MainAsync ma = new MainAsync();
         ma.execute(response, null, null);
       }
@@ -79,19 +80,20 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Could not access to server, please try again latter", Toast.LENGTH_LONG).show();
       }
     });
+
+
     //new MainAsyncTask().execute(url, "", "");
 
   }
 
-  private class MainAsync extends AsyncTask<JSONObject ,String ,JSONArray>{
+  private class MainAsync extends AsyncTask<JSONObject ,String ,List>{
 
     @Override
-    protected JSONArray doInBackground(JSONObject... response) {
+    protected List doInBackground(JSONObject... response) {
       try {
         JSONArray respnoseArray = response[0].getJSONArray("response");
         List<Posts> postList = PostsJsonParser.parseFeed(respnoseArray);
-        
-        return  respnoseArray;
+        return  postList;
       } catch (JSONException e ){
         e.printStackTrace();
       }
@@ -100,9 +102,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostExecute(JSONArray respnoseArray) {
-      super.onPostExecute(respnoseArray);
-
+    protected void onPostExecute(List postList) {
+      super.onPostExecute(postList);
+      ListView lv = (ListView) findViewById(R.id.viewscroll);
+      PostAdapter pa = new PostAdapter(getBaseContext(), 0, postList);
+      lv.setAdapter(pa);
     }
   }
 

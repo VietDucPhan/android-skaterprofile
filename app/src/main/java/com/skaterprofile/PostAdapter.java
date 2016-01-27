@@ -27,6 +27,10 @@ public class PostAdapter extends ArrayAdapter<Posts> {
     this.context = context;
     this.postlist = objects;
   }
+  @Override
+  public boolean isEnabled(int position) {
+    return false;
+  }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
@@ -36,10 +40,12 @@ public class PostAdapter extends ArrayAdapter<Posts> {
     View view = inflater.inflate(R.layout.single_post, parent, false);
 
     Posts post = postlist.get(position);
-    TextView tv = (TextView) view.findViewById(R.id.description);
+    TextView desc = (TextView) view.findViewById(R.id.desc);
+    TextView name = (TextView) view.findViewById(R.id.name);
     ImageView iv = (ImageView) view.findViewById(R.id.postImage);
     iv.setImageBitmap(post.getImage());
-    tv.setText(post.getDescription());
+    desc.setText(post.getDesc());
+    name.setText(post.getName());
     //Display flower name in the TextView widget
 
     return view;
